@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  title: Analytics Service API
+  version: 1.0.0
+  description: >
+    Analytics endpoints providing user and matching insights
+    for the admin dashboard.  
+    Data is fetched directly from the MySQL database and updated
+    in real time on page refresh.
+
+servers:
+  - url: http://localhost:8000
+    description: Local Development Server
+
+tags:
+  - name: Analytics
+    description: API endpoints for retrieving aggregated user and matching data
+
+paths:
+  /api/v1/admin/analytics/user-insights:
+    get:
+      summary: Get user role distribution
+      description: >
+        Returns aggregated counts of users grouped by their role
+        (volunteer, NGO, corporate, admin).  
+        Used to visualize the overall system composition with charts.
+      tags: [Analytics]
+      responses:
+        '200':
+          description: Successfully retrieved user insights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_users:
+                    type: integer
+                    example: 120
+                  volunteers:
+                    type: integer
+                    example: 50
+                  ngos:
+                    type: integer
+                    example: 30
+                  corporates:
+                    type: integer
+                    example: 25
+                  admins:
+                    type: integer
+                    example: 15
+                  role_distribution:
+                    type: array
+                    description: Data for chart plotting
+                    items:
+                      type: object
+                      properties:
+                        role:
+                          type: string
+                          example: volunteer
+                        count:
+                          type: integer
+                          example: 50
+
+  /api/v1/admin/analytics/matching-insights:
+    get:
+      summary: Get NGO–volunteer matching insights
+      description: >
+        Provides aggregate analytics on how volunteers and NGOs are matched.  
+        Returns counts of match statuses (`matched`, `pending`, `rejected`) and
+        top-performing NGOs with the highest number of successful matches.
+      tags: [Analytics]
+      responses:
+        '200':
+          description: Successfully retrieved matching insights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_matches:
+                    type: integer
+                    example: 85
+                  matched:
+                    type: integer
+                    example: 60
+                  pending:
+                    type: integer
+                    example: 15
+                  rejected:
+                    type: integer
+                    example: 10
+                  match_status_distribution:
+                    type: array
+                    description: Data for chart plotting
+                    items:
+                      type: object
+                      properties:
+                        status:
+                          type: string
+                          example: matched
+                        count:
+                          type: integer
+                          example: 60
+                  top_ngos:
+                    type: array
+                    description: NGOs with highest successful matches
+                    items:
+                      type: object
+                      properties:
+                        ngo_name:
+                          type: string
+                          example: "Helping Hands Foundation"
+                        successful_matches:
+                          type: integer
+                          example: 18
