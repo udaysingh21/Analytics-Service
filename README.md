@@ -1,6 +1,4 @@
-# Analytics-Service
-
-## Analytics Service – FastAPI
+# Analytics Service – FastAPI
 
 This is the Analytics Microservice for aggregating data from the Users and Postings services.
 It exposes secure admin analytics endpoints that require JWT authentication.
