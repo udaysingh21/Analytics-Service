@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import SessionLocal
-from app.services.analytics_service import get_user_insights, get_matching_insights, get_volunteers_registered_for_posting
+from app.services.analytics_service import get_user_insights, get_volunteers_registered_for_posting
+from fastapi import APIRouter, Depends
+from fastapi import Header, HTTPException
 
 router = APIRouter(prefix="/api/v1/admin/analytics", tags=["Analytics"])
 
@@ -21,9 +23,9 @@ async def user_insights(authorization: str = Header(None)):
 
     return await get_user_insights(token)
 
-@router.get("/matching-insights")
-def matching_insights(db: Session = Depends(get_db)):
-    return {"data": get_matching_insights(db)}
+# @router.get("/matching-insights")
+# def matching_insights(db: Session = Depends(get_db)):
+#     return {"data": get_matching_insights(db)}
 
 @router.get("/posting/{posting_id}/volunteers")
 async def volunteers_for_posting(
