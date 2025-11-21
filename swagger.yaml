@@ -113,3 +113,77 @@ paths:
                         successful_matches:
                           type: integer
                           example: 18
+
+  /api/v1/admin/analytics/volunteers-per-posting/{posting_id}:
+    get:
+      summary: Get volunteers registered for a posting
+      description: >
+        Return posting metadata and the list of volunteers registered for the given posting.
+      tags: [Analytics]
+      parameters:
+        - name: posting_id
+          in: path
+          required: true
+          description: ID of the posting to fetch volunteers for
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successfully retrieved volunteers for the posting
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postingId:
+                    type: integer
+                    example: 123
+                  postingTitle:
+                    type: string
+                    example: "Food Drive - Weekend"
+                  totalVolunteersRegistered:
+                    type: integer
+                    example: 2
+                  volunteers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 42
+                        name:
+                          type: string
+                          example: "Jane Doe"
+                        email:
+                          type: string
+                          format: email
+                          example: "jane@example.com"
+                        role:
+                          type: string
+                          example: "volunteer"
+                        error:
+                          type: string
+                          nullable: true
+                          example: null
+        '404':
+          description: Posting not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Posting 123 not found"
+        '500':
+          description: Server error fetching posting or users
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  detail:
+                    type: string
+                    example: "Failed to fetch posting or users"
