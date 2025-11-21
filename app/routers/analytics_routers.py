@@ -13,13 +13,26 @@ def get_db():
         db.close()
 
 @router.get("/user-insights")
-def user_insights(db: Session = Depends(get_db)):
-    return {"data": get_user_insights(db)}
+async def user_insights(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Missing Authorization header")
+
+    token = authorization.replace("Bearer ", "")
+
+    return await get_user_insights(token)
 
 @router.get("/matching-insights")
 def matching_insights(db: Session = Depends(get_db)):
     return {"data": get_matching_insights(db)}
 
-@router.get("/volunteers-per-posting/{posting_id}")
-async def volunteers_for_posting(posting_id: int):
-    return await get_volunteers_registered_for_posting(posting_id)
+@router.get("/posting/{posting_id}/volunteers")
+async def volunteers_for_posting(
+    posting_id: int,
+    authorization: str = Header(None)
+):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Missing JWT token")
+
+    token = authorization.replace("Bearer ", "")
+
+    return await get_volunteers_registered_for_posting(posting_id, token)
