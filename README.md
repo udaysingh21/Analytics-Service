@@ -7,6 +7,7 @@ It exposes secure admin analytics endpoints that require JWT authentication.
 
 ## Project Structure
 
+```
 ANALYTICS-SERVICE/
 │
 ├── app/
@@ -22,6 +23,7 @@ ANALYTICS-SERVICE/
 ├── requirements.txt          # Python dependencies
 ├── swagger.yaml              # API documentation (OpenAPI spec)
 └── README.md                 # Project documentation
+```
 
 ## Running the Service
 
@@ -60,7 +62,9 @@ Fetches all users from the Users microservice and returns the count of users bas
 (Volunteer, Corporate, NGO, Admin, etc.)
 
 Headers
+```
 Authorization: Bearer <JWT_TOKEN>
+```
 
 Sample Response:
 ```
@@ -82,14 +86,16 @@ Description
 
 Fetches:
 
-Posting details
+- Posting details
 
-List of volunteers registered for the posting
+- List of volunteers registered for the posting
 
-Full volunteer profiles (pulled from Users API)
+- Full volunteer profiles (pulled from Users API)
 
 Headers
+```
 Authorization: Bearer <JWT_TOKEN>
+```
 
 Sample Response
 ```
