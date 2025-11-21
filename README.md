@@ -1,11 +1,12 @@
 # Analytics-Service
 
-📊 Analytics Service – FastAPI
+## Analytics Service – FastAPI
 
 This is the Analytics Microservice for aggregating data from the Users and Postings services.
 It exposes secure admin analytics endpoints that require JWT authentication.
 
-📁 Project Structure
+## Project Structure
+
 ANALYTICS-SERVICE/
 │
 ├── app/
@@ -22,17 +23,22 @@ ANALYTICS-SERVICE/
 ├── swagger.yaml              # API documentation (OpenAPI spec)
 └── README.md                 # Project documentation
 
-🚀 Running the Service
+## Running the Service
+
 1. Install dependencies
+```
 pip install -r requirements.txt
+```
 
 2. Start FastAPI
+```
 uvicorn app.main:app --reload --port 8005
+```
 
 3. Access Swagger UI
 http://localhost:8005/docs
 
-🔐 Authentication
+## Authentication
 
 All analytics APIs require a JWT Token.
 
@@ -40,10 +46,13 @@ Send token in the request header:
 
 Authorization: Bearer <JWT_TOKEN>
 
-📡 API Endpoints
-📌 1. User Insights API
+## API Endpoints
+
+1. User Insights API
 Endpoint
+```
 GET /api/v1/admin/analytics/user-insights
+```
 
 Description
 
@@ -53,17 +62,21 @@ Fetches all users from the Users microservice and returns the count of users bas
 Headers
 Authorization: Bearer <JWT_TOKEN>
 
-Sample Response
+Sample Response:
+```
 [
   { "role": "VOLUNTEER", "count": 42 },
   { "role": "NGO", "count": 5 },
   { "role": "ADMIN", "count": 3 },
   { "role": "CORPORATE", "count": 12 }
 ]
+```
 
-📌 2. Volunteers Registered for a Posting
+2. Volunteers Registered for a Posting
 Endpoint
+```
 GET /api/v1/admin/analytics/posting/{posting_id}/volunteers
+```
 
 Description
 
@@ -79,6 +92,7 @@ Headers
 Authorization: Bearer <JWT_TOKEN>
 
 Sample Response
+```
 {
   "postingId": 1,
   "postingTitle": "Beach Cleanup Drive",
@@ -96,10 +110,16 @@ Sample Response
     }
   ]
 }
+```
 
-🐳 Docker
+## Docker
+
 Build
+```
 docker build -t analytics-service .
+```
 
 Run
+```
 docker run -p 8005:8005 analytics-service
+```
