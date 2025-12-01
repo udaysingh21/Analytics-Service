@@ -1,7 +1,7 @@
 # ----------------------------
 # Stage 1 — Build dependencies
 # ----------------------------
-FROM python:3.10-slim as builder
+FROM python:3.10-slim AS builder
 
 # Avoid python buffering logs
 ENV PYTHONDONTWRITEBYTECODE=1
